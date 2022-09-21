@@ -2,9 +2,17 @@
 
 A working demo with a Fast DDS Discovery Server and a Super Client DDS Config.
 
-## Husarnet Join Code
+## Prerequisites
 
-Create the `.env` file (based on `.env.template` and place your Husarnet Join code here)
+1. Create the `.env` file (based on `.env.template` and place your Husarnet Join code here)
+2. Make sure you have installed Docker Compose v2. I have tested on the following version:
+
+```bash
+user@laptop:/$ docker compose version
+Docker Compose version v2.6.0
+```
+
+If you have version `< 2.0.0` then replace `docker compose` with a `docker-compose` command.
 
 ## Initial setup
 
@@ -47,7 +55,7 @@ docker compose -f compose.client.yaml up
 Open a separate terminal and access the shell of a ROS 2 listener Docker container with a `Super Client` DDS config. After you list the available topics you should see a `/chatter` topic:
 
 ```
-user@llaptop:/$ docker exec -it super-client bash
+user@laptop:/$ docker exec -it super-client bash
 root@9430b05a9684:/# ros2 topic list
 /chatter
 /parameter_events
