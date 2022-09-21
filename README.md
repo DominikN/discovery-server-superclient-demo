@@ -9,9 +9,10 @@ Create the `.env` file (based on `.env.template` and place your Husarnet Join co
 ## Initial setup
 
 > **Warning**
+>
 > You need to run this step only once.
 
-The Husarnet hostname of a device running Discovery Server need to be known (be available in `/etc/hosts` file of the Husarnet Client) before evaluating the hostname in a `dds-config.*.xml` file. This is why we need to run Husarnet client before running ROS 2 Docker containers with a custom DDS config:
+The Husarnet hostname of a device running Discovery Server need to be known (be available in `/etc/hosts` file of the Husarnet Client) before evaluating the hostnames in a `dds-config.*.xml` file. This is why we need to make **the first** run of Husarnet Client **before** running ROS 2 Docker containers with a custom DDS config:
 
 ### Running Husarnet Client for a `Discovery Server`
 
@@ -43,7 +44,7 @@ docker compose -f compose.client.yaml up
 
 ## Testing a `Super Client`
 
-In a separate terminal and access the shell of a ROS 2 listener node with a `Super Client` DDS config. After you list the topics you should see a `/chatter` topic:
+Open a separate terminal and access the shell of a ROS 2 listener Docker container with a `Super Client` DDS config. After you list the available topics you should see a `/chatter` topic:
 
 ```
 user@llaptop:/$ docker exec -it super-client bash
@@ -62,3 +63,5 @@ data: 'Hello World: 703'
 ---
 ...
 ```
+
+If your replace `dds-config.super-client.xml` with `dds-config.client.xml` in `compose.client.yaml`, then `ros2 topic list` command will not list a `/chatter` topic.
