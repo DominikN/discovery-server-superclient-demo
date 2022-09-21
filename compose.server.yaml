@@ -1,0 +1,24 @@
+services:
+
+  talker:
+    build: .
+    network_mode: service:husarnet-talker
+    volumes: 
+      - ./dds-config.server.xml:/dds-config.xml
+    environment:
+      - FASTRTPS_DEFAULT_PROFILES_FILE=/dds-config.xml
+    command: ros2 run demo_nodes_cpp talker
+
+  husarnet-talker:
+    image: husarnet/husarnet
+    volumes:
+      - /var/lib/husarnet
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=0
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    environment: 
+      - HOSTNAME=my-talker
+      - JOINCODE=${JOINCODE:?you need to create .env file with a JOINCODE variable}

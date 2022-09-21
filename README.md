@@ -1,2 +1,64 @@
 # discovery-server-superclient-demo
-Working demo with a Fast DDS Discovery Server and a Super Client
+
+A working demo with a Fast DDS Discovery Server and a Super Client DDS Config.
+
+## Husarnet Join Code
+
+Create the `.env` file (based on `.env.template` and place your Husarnet Join code here)
+
+## Initial setup
+
+> **Warning**
+> You need to run this step only once.
+
+The Husarnet hostname of a device running Discovery Server need to be known (be available in `/etc/hosts` file of the Husarnet Client) before evaluating the hostname in a `dds-config.*.xml` file. This is why we need to run Husarnet client before running ROS 2 Docker containers with a custom DDS config:
+
+### Running Husarnet Client for a `Discovery Server`
+
+```bash
+docker compose -f compose.server.yaml up husarnet-talker -d
+```
+
+### Running Husarnet Client for a `Super Client`
+
+```bash
+docker compose -f compose.client.yaml up husarnet-listener -d
+```
+
+## Running ROS 2 containers
+
+Run those Docker Compose commands in **two separate terminals**:
+
+### ROS 2 talker with a `Discovery Server` DDS config
+
+```bash
+docker compose -f compose.server.yaml up
+```
+
+### ROS 2 listener with a `Super Client` DDS config
+
+```bash
+docker compose -f compose.client.yaml up
+```
+
+## Testing a `Super Client`
+
+In a separate terminal and access the shell of a ROS 2 listener node with a `Super Client` DDS config. After you list the topics you should see a `/chatter` topic:
+
+```
+user@llaptop:/$ docker exec -it super-client bash
+root@9430b05a9684:/# ros2 topic list
+/chatter
+/parameter_events
+/rosout
+root@9430b05a9684:/# ros2 topic echo /chatter
+data: 'Hello World: 700'
+---
+data: 'Hello World: 701'
+---
+data: 'Hello World: 702'
+---
+data: 'Hello World: 703'
+---
+...
+```
