@@ -13,7 +13,7 @@ services:
     command: ros2 run demo_nodes_cpp talker
 
   husarnet-talker:
-    image: husarnet/husarnet-nightly:2022.09.29.2
+    image: husarnet/husarnet-nightly:2022.09.29.3
     volumes:
       - /var/lib/husarnet
     sysctls:
