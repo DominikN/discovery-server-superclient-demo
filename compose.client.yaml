@@ -3,9 +3,8 @@ services:
   listener:
     build: .
     container_name: super-client
-    depends_on:
-      husarnet-listener:
-        condition: service_healthy
+    depends_on: 
+      husarnet-listener: { condition: service_healthy }
     network_mode: service:husarnet-listener
     volumes: 
       - ./dds-config.super-client.xml:/dds-config.xml
@@ -27,4 +26,4 @@ services:
       - HOSTNAME=my-listener
       - JOINCODE=${JOINCODE:?you need to create .env file with a JOINCODE variable}
       - WAIT_HOSTNAMES=my-listener,my-talker
-    
+      # - HUSARNET_DEBUG=1

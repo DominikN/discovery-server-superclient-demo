@@ -3,8 +3,7 @@ services:
   talker:
     build: .
     depends_on:
-      husarnet-talker:
-        condition: service_healthy
+      husarnet-talker: { condition: service_healthy }
     network_mode: service:husarnet-talker
     volumes: 
       - ./dds-config.server.xml:/dds-config.xml
@@ -26,3 +25,4 @@ services:
       - HOSTNAME=my-talker
       - JOINCODE=${JOINCODE:?you need to create .env file with a JOINCODE variable}
       - WAIT_HOSTNAMES=my-listener,my-talker
+      # - HUSARNET_DEBUG=1
