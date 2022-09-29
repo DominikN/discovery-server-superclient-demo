@@ -2,6 +2,9 @@ services:
 
   talker:
     build: .
+    depends_on:
+      husarnet-talker:
+        condition: service_healthy
     network_mode: service:husarnet-talker
     volumes: 
       - ./dds-config.server.xml:/dds-config.xml
@@ -10,7 +13,7 @@ services:
     command: ros2 run demo_nodes_cpp talker
 
   husarnet-talker:
-    image: husarnet/husarnet
+    image: husarnet/husarnet-nightly:2022.09.29.2
     volumes:
       - /var/lib/husarnet
     sysctls:
@@ -22,3 +25,4 @@ services:
     environment: 
       - HOSTNAME=my-talker
       - JOINCODE=${JOINCODE:?you need to create .env file with a JOINCODE variable}
+      - WAIT_HOSTNAMES=my-listener,my-talker

@@ -14,7 +14,7 @@ Docker Compose version v2.6.0
 
 If you have version `< 2.0.0` then replace `docker compose` with a `docker-compose` command.
 
-## Initial setup
+<!-- ## Initial setup
 
 > **Warning**
 >
@@ -32,7 +32,7 @@ docker compose -f compose.server.yaml up husarnet-talker -d
 
 ```bash
 docker compose -f compose.client.yaml up husarnet-listener -d
-```
+``` -->
 
 ## Running ROS 2 containers
 

@@ -3,6 +3,9 @@ services:
   listener:
     build: .
     container_name: super-client
+    depends_on:
+      husarnet-listener:
+        condition: service_healthy
     network_mode: service:husarnet-listener
     volumes: 
       - ./dds-config.super-client.xml:/dds-config.xml
@@ -11,7 +14,7 @@ services:
     command: ros2 run demo_nodes_cpp listener
 
   husarnet-listener:
-    image: husarnet/husarnet
+    image: husarnet/husarnet-nightly:2022.09.29.2
     volumes:
       - /var/lib/husarnet
     sysctls:
@@ -23,4 +26,5 @@ services:
     environment: 
       - HOSTNAME=my-listener
       - JOINCODE=${JOINCODE:?you need to create .env file with a JOINCODE variable}
+      - WAIT_HOSTNAMES=my-listener,my-talker
     
