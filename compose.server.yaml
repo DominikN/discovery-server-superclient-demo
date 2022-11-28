@@ -12,7 +12,7 @@ services:
     command: ros2 run demo_nodes_cpp talker
 
   husarnet-talker:
-    image: husarnet/husarnet-nightly:2022.09.29.3
+    image: husarnet/husarnet:2.0.13
     volumes:
       - /var/lib/husarnet
     sysctls:
@@ -25,4 +25,4 @@ services:
       - HOSTNAME=my-talker
       - JOINCODE=${JOINCODE:?you need to create .env file with a JOINCODE variable}
       - WAIT_HOSTNAMES=my-listener,my-talker
-      # - HUSARNET_DEBUG=1
+      - HUSARNET_DEBUG=1
